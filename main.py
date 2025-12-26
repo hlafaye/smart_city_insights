@@ -6,6 +6,7 @@ from wtforms.validators import DataRequired
 import os 
 from dotenv import load_dotenv
 from calls import get_infos ,search
+import json
 
 
 load_dotenv()
@@ -18,23 +19,44 @@ class InputCity(FlaskForm):
     city = StringField("", validators=[DataRequired()],render_kw={"placeholder": "Enter your city name"})
     submit = SubmitField("Explore data")
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/',methods=["GET", "POST"])
 def index():
     form = InputCity()
-    results = search(form.city.data)
+    return render_template('index.html', form=form)
 
-    if form.validate_on_submit():
-       city = form.city.data
-       return redirect(url_for('show_data', city=city ,results=results))
+@app.route('/data')
+def show_data():
+    lat = request.args.get("lat", type=float)
+    lon = request.args.get("lon", type=float)
+    bbox_raw = request.args.get("bbox")
+    bbox = json.loads(bbox_raw)
+    print(f"bounding box selected = {bbox}")
 
-    return render_template('index.html', form=form, results=results)
+    if lat is None or lon is None:
+        return redirect(url_for("index"))
 
-@app.route('/data/<city>')
-def show_data(city):
-    name, iso, weather , air , mobility = get_infos(city.title())
-   
+    name, iso, weather, air, mobility = get_infos(lat, lon, bbox)
+    return render_template('data.html', city=name, iso=iso, weather=weather, air=air, mobility=mobility)
 
-    return render_template('data.html', city=name, iso=iso, weather=weather ,air=air, mobility=mobility)
+@app.route("/search",  methods=["GET"])
+def search_city():
+    q = request.args.get("q", "").strip()
+
+    if len(q) < 2:
+        return jsonify([])
+
+    results = search(q)  # calls.py
+    return jsonify(results)
+
+
+@app.route("/about")
+def about():
+    return render_template('infos.html')
+
+@app.route("/contact")
+def contact():
+    return render_template('contact.html')
+
 
 
 if __name__=="__main__":

@@ -286,3 +286,61 @@
   .sci-badge.q-4 {
       border-color: rgba(80, 220, 140, .25);
   }
+
+  .autocomplete {
+      position: relative;
+      width: 100%;
+      max-width: 360px;
+      /* adapte */
+  }
+
+  .suggestions {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      right: 0;
+      z-index: 50;
+
+      margin: 0;
+      padding: 6px;
+      list-style: none;
+
+      background: rgba(15, 15, 18, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+
+      max-height: 220px;
+      overflow-y: auto;
+
+      display: none;
+  }
+
+  .suggestions.open {
+      display: block;
+  }
+
+  .suggestion-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding: 10px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+  }
+
+  .suggestion-item:hover {
+      background: rgba(255, 255, 255, 0.08);
+  }
+
+  .city-name {
+      font-weight: 600;
+  }
+
+  .city-iso {
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.10);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+  }

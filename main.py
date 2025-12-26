@@ -5,7 +5,7 @@ from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 import os 
 from dotenv import load_dotenv
-from calls import get_infos ,search
+from calls import get_infos ,search, overall_calc
 import json
 
 
@@ -35,8 +35,12 @@ def show_data():
     if lat is None or lon is None:
         return redirect(url_for("index"))
 
+
     name, iso, weather, air, mobility = get_infos(lat, lon, bbox)
-    return render_template('data.html', city=name, iso=iso, weather=weather, air=air, mobility=mobility)
+
+    overall_score, overall_label = overall_calc(weather, air, mobility)
+
+    return render_template('data.html', city=name, iso=iso, weather=weather, air=air, mobility=mobility, overall_score=overall_score, overall_label=overall_label)
 
 @app.route("/search",  methods=["GET"])
 def search_city():

@@ -27,7 +27,6 @@ document.addEventListener("DOMContentLoaded", () => {
     input.addEventListener("input", () => {
       clearTimeout(timer);
   
-      // si l’utilisateur retape -> on invalide la sélection précédente
       latEl.value = "";
       lonEl.value = "";
       btn.disabled = true;
@@ -70,5 +69,46 @@ document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener("click", (e) => {
       if (!e.target.closest(".autocomplete")) clearSuggestions();
     });
+  });
+  
+
+
+
+//   #overall score
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const score = window.__OVERALL_SCORE__ ?? 0;
+    const max = 100;
+  
+    const circle = document.querySelector(".gauge-progress");
+    const valueEl = document.getElementById("overallValue");
+    const labelEl = document.getElementById("overallLabel");
+  
+    if (!circle) return;
+  
+    const radius = 50;
+    const circumference = 2 * Math.PI * radius;
+  
+    circle.style.strokeDasharray = circumference;
+  
+    const offset = circumference * (1 - score / max);
+    requestAnimationFrame(() => {
+      circle.style.strokeDashoffset = offset;
+    });
+  
+    // compteur animé
+    let current = 0;
+    const step = Math.max(1, Math.floor(score / 40));
+  
+    const interval = setInterval(() => {
+      current += step;
+      if (current >= score) {
+        current = score;
+        clearInterval(interval);
+      }
+      valueEl.textContent = current;
+    }, 20);
+  
+    labelEl.textContent = window.__OVERALL_LABEL__ || "";
   });
   

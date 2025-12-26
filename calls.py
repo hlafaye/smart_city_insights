@@ -215,7 +215,6 @@ def get_trafic_infos(lat, lon, bbox):
 
 
     trafic_index = median(cong_eff)
-    # coverage = len(cong_eff)/len(OFFSETS)
     data_quality = min(1.0, mean(conf_val) * coverage_attempt * coverage_used)
 
 
@@ -294,6 +293,35 @@ def search(entry):
 
        
 
+def overall_calc(weather, air, mobility):
+
+    OVERALL_LEVELS = [
+        (39, {"label":"Tough day", "class":"overall-1"}),
+        (59, {"label":"Okay","class":"overall-2"}),
+        (74, {"label":"Good", "class":"overall-3" }),
+        (89, {"label":"Great", "class":"overall-4" }),
+        (90, {"label":"Excellent", "class":"overall-5" }),
+        ]
+    if not mobility["index"]:
+        traffic_score  = 50
+        traffic_quality = 0.2
+
+    traffic_score = (1 - mobility["index"]) * 100
+    traffic_quality = mobility["quality"]
+    air_score = (6 - air["aqi"]) / 5 * 100 
+    temp = weather['temp']
+    penalite = abs(temp - 18) * 4
+    weather_score = max(0, min(100 - penalite, 100))
+    raw = 0.40*traffic_score + 0.35*air_score + 0.25*weather_score
+    overall = raw * (0.6 + 0.4*traffic_quality)
+    overall_score = round(overall)
+    
+    stack = pick_level(overall_score, OVERALL_LEVELS)
+    
+    
+    overall_label = stack["label"]
+
+    return overall_score, overall_label
 
 
 

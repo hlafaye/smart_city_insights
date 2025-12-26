@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container px-4 py-5" id="custom-cards">
+    <h2 class="pb-2 border-bottom">
+        {{ city }}
+        <span class="badge bg-secondary ms-2">{{ iso }}</span>
+    </h2>
+      
+            <div class="row g-4 align-items-stretch">
+                <div class="col-12 col-lg-4">
+                    <!-- WEATHER CARD -->
+                     <div class="sci-card">
+                <div class="sci-card__top">
+                    <div>
+                        <div class="sci-kicker">Weather</div>
+                        <div class="sci-sub">{{ city }}, {{ iso }}</div>
+                    </div>
+        
+                    <img class="sci-weather-icon" src="https://openweathermap.org/img/wn/{{ weather.icon }}@2x.png"
+                        alt="{{ weather.desc }}">
+                </div>
+        
+                <div class="sci-temp">
+                    {{ weather.temp|round(0) }}°C
+                    <span class="sci-feels">Feels like {{ weather.feels_like|round(0) }}°C</span>
+                </div>
+        
+                <div class="sci-desc">{{ weather.desc|title }}</div>
+        
+                <div class="sci-meta">
+                    <span>Wind {{ weather.wind|round(1) }} m/s</span>
+                    <span class="sci-dot">•</span>
+                    <span>Humidity {{ weather.humidity }}%</span>
+                </div>
+            </div>
+                </div>
+        
+                <div class="col-12 col-lg-4">
+                    <!-- AIR QUALITY CARD -->
+                    <div class="sci-card {{ air.class }}">
+                        <div class="sci-card__top">
+                            <div>
+                                <div class="sci-kicker">Air quality</div>
+                                <div class="sci-sub">{{ city }}, {{ iso }}</div>
+                            </div>
+                        </div>
+                    
+                        <div class="sci-aqi-big">
+                            <span class="aqi-num">{{ air.aqi }}</span>
+                            <span class="aqi-label">{{ air.label }}</span>
+                        </div>
+                    
+                        <div class="sci-desc">Air quality is {{ air.label|lower }} right now.</div>
+                    
+                        <div class="sci-meta">
+                            <span>PM2.5 {{ air.pm2_5|round(1) }}</span>
+                            <span class="sci-dot">•</span>
+                            <span>PM10 {{ air.pm10|round(1) }}</span>
+                        </div>
+                    
+                        <div class="sci-meta">
+                            <span>NO₂ {{ air.no2|round(1) }}</span>
+                            <span class="sci-dot">•</span>
+                            <span>O₃ {{ air.o3|round(1) }}</span>
+                        </div>
+                    </div>
+                      
+                        
+                        
+                </div>
+        
+                <div class="col-12 col-lg-4">
+                    <!-- MOBILITY CARD -->
+                    
+                        <div class="sci-card {{ mobility.class }}">
+                            <div class="sci-card__top">
+                                <div>
+                                    <div class="sci-kicker">Traffic</div>
+                                    <div class="sci-sub">{{ city }}, {{ iso }}</div>
+                                </div>
+                    
+                                <div class="sci-badge {{ mobility.quality_class }}">
+                                    Reliability {{ mobility.quality_label }}
+                                </div>
+                            </div>
+                    
+                            <div class="sci-traffic-main">
+                                <div class="sci-traffic-value">{{ (mobility.index * 100) | round(0) }}%</div>
+                                <div class="sci-traffic-label">{{ mobility.label }}</div>
+                                <div class="sci-traffic-sub">Data quality: {{ mobility.quality | round(2) }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        
+          
+{% endblock %}

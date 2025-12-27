@@ -33,5 +33,6 @@ cd smart_city_insights
 python -m venv .venv
 pip install -r requirements.txt
 
-
+⚠️ Note: This demo runs on a free Render instance.
+The first load may take a few seconds and require a refresh due to cold start.
 

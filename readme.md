@@ -18,10 +18,12 @@ real-time data from traffic, weather, and air quality APIs.
 
 
 ## Create a .env file
-APP_KEY= Flask app custom key
-OSM_KEY= Open weather map API key
-GPS_KEY= TomTom API key
+- APP_KEY= Flask app custom key
+- OSM_KEY= Open weather map API key
+- GPS_KEY= TomTom API key
 
+## Built to be deployed with docker
+Docker deploy ready.
 
 ## Local setup
 

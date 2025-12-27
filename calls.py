@@ -300,7 +300,7 @@ def overall_calc(weather, air, mobility):
         (59, {"label":"Okay","class":"overall-2"}),
         (74, {"label":"Good", "class":"overall-3" }),
         (89, {"label":"Great", "class":"overall-4" }),
-        (90, {"label":"Excellent", "class":"overall-5" }),
+        (100, {"label":"Excellent", "class":"overall-5" }),
         ]
     if not mobility["index"]:
         traffic_score  = 50
@@ -309,9 +309,23 @@ def overall_calc(weather, air, mobility):
     traffic_score = (1 - mobility["index"]) * 100
     traffic_quality = mobility["quality"]
     air_score = (6 - air["aqi"]) / 5 * 100 
+
     temp = weather['temp']
     penalite = abs(temp - 18) * 4
-    weather_score = max(0, min(100 - penalite, 100))
+    temp_score = max(0, min(100 - penalite, 100))
+
+    wind = weather["wind"]  
+    wind_penalty = max(0, wind - 4) * 5
+    wind_score = max(0, min(100 - wind_penalty, 100))
+    humidity = weather["humidity"]  
+    humidity_penalty = abs(humidity - 50) * 0.8
+    humidity_score = max(0, min(100 - humidity_penalty, 100))
+    weather_score = round(
+    0.6 * temp_score +
+    0.25 * humidity_score +
+    0.15 * wind_score
+    )
+    
     raw = 0.40*traffic_score + 0.35*air_score + 0.25*weather_score
     overall = raw * (0.6 + 0.4*traffic_quality)
     overall_score = round(overall)

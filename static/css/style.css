@@ -391,3 +391,27 @@
       text-transform: uppercase;
       letter-spacing: 0.08em;
   }
+
+  .feature-icon {
+    width: 2.2em;
+    height: 2.2em;
+    vertical-align: -2em;
+    filter: invert(1);
+      /* rend le SVG blanc si ton SVG est noir */
+  }
+
+
+
+
+  .contact-icon {
+      width: 1.1em;
+      height: 1.1em;
+      opacity: .5;
+      transition: opacity .2s ease, transform .2s ease;
+    filter: invert(1);
+  }
+
+  .btn:hover .contact-icon {
+      opacity: .85;
+      transform: translateY(-1px);
+  }

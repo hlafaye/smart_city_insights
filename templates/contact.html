@@ -1,6 +1,52 @@
 {% extends "base.html" %}
 
 {% block content %}
+<div class="card metric-card mx-auto" style="max-width: 720px;">
 
+    <div class="card-body text-center">
 
+        <h1 class="card-title-kicker mb-2">CONTACT</h1>
+        <h4 class="fw-semibold mb-3">Let’s build something useful.</h4>
+
+        <p class="text-white-50 mb-3">
+            Feedback, collaboration, or job opportunities — feel free to reach out.
+        </p>
+
+        <span class="badge rounded-pill bg-dark-subtle text-white-50 border mb-4">
+            Get in touch
+        </span>
+
+        <!-- Boutons -->
+        <div class="d-flex justify-content-center gap-2 flex-wrap mb-4">
+            <a class="btn btn-primary" href="mailto:hpythondev@gmail.com?subject=Smart City Insight">
+                <img src="{{ url_for('static', filename='icons/envelope.svg') }}" class="contact-icon me-2" alt="envelope icon">
+                Email me
+            </a>
+            <a class="btn btn-outline-light" href="https://github.com/hlafaye?tab=overview&from=2025-12-01&to=2025-12-27" target="_blank" rel="noopener">
+                <img src="{{ url_for('static', filename='icons/github.svg') }}" class="contact-icon me-2" alt="github logo">
+                GitHub
+            </a>
+            <a class="btn btn-outline-light" href="https://www.linkedin.com/in/hugo-lafaye-6429b6159/" target="_blank" rel="noopener">
+                <img src="{{ url_for('static', filename='icons/linkedin.svg') }}" class="contact-icon me-2" alt="linkedin logo">
+                LinkedIn
+            </a>
+        </div>
+
+        <div class="small text-white-50">
+            Prefer a quick message? Email is the fastest.
+        </div>
+
+    </div>
+</div>
+  
+
+<!-- <ul class="nav col-md-4 justify-content-end list-unstyled d-flex text-center">
+    <li class="ms-3"><a class="text-body-secondary" href="#" aria-label="Mailto">
+        <img src="{{ url_for('static', filename='icons/envelope.svg') }}" class="feature-icon me-3" alt="">
+        </a></li>
+    <li class="ms-3"><a class="text-body-secondary" href="#" aria-label="Facebook">
+        <img src="{{ url_for('static', filename='icons/github.svg') }}" class="feature-icon me-3" alt="">
+    </a></li>
+</ul> -->
 {% endblock %}
+
